@@ -1,1 +1,142 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+<meta charset="UTF-8">
+<title>Validador CPF</title>
 
+<style>
+
+body{
+    background-color: #eeeeee;
+    font-family: Arial;
+}
+
+#caixa{
+    width: 280px;
+    margin: auto;
+    margin-top: 120px;
+    background-color: white;
+    padding: 20px;
+    border: 1px solid #ccc;
+}
+
+input{
+    width: 95%;
+    padding: 8px;
+    margin-top: 10px;
+}
+
+button{
+    margin-top: 10px;
+    padding: 8px;
+    width: 100%;
+}
+
+#resultado{
+    margin-top: 15px;
+    font-weight: bold;
+}
+
+</style>
+
+</head>
+<body>
+
+<div id="caixa">
+
+<h2>Validador de CPF</h2>
+
+<input type="text" id="cpf" placeholder="Digite o CPF">
+
+<button onclick="verificarCPF()">Verificar</button>
+
+<p id="resultado"></p>
+
+</div>
+
+<script>
+
+function verificarCPF(){
+
+    let cpf = document.getElementById("cpf").value;
+
+    cpf = cpf.replace(/\D/g,'');
+
+    let resultado = document.getElementById("resultado");
+
+    if(validarCPF(cpf)){
+        resultado.innerHTML = "CPF válido";
+        resultado.style.color = "green";
+    }
+    else{
+        resultado.innerHTML = "CPF inválido";
+        resultado.style.color = "red";
+    }
+
+}
+
+function validarCPF(cpf){
+
+    if(cpf.length != 11){
+        return false;
+    }
+
+    let iguais = true;
+
+    for(let i = 1; i < 11; i++){
+
+        if(cpf[i] != cpf[0]){
+            iguais = false;
+        }
+
+    }
+
+    if(iguais){
+        return false;
+    }
+
+    let soma = 0;
+    let resto;
+
+    for(let i = 0; i < 9; i++){
+
+        soma += parseInt(cpf[i]) * (10 - i);
+
+    }
+
+    resto = (soma * 10) % 11;
+
+    if(resto == 10){
+        resto = 0;
+    }
+
+    if(resto != parseInt(cpf[9])){
+        return false;
+    }
+
+    soma = 0;
+
+    for(let i = 0; i < 10; i++){
+
+        soma += parseInt(cpf[i]) * (11 - i);
+
+    }
+
+    resto = (soma * 10) % 11;
+
+    if(resto == 10){
+        resto = 0;
+    }
+
+    if(resto != parseInt(cpf[10])){
+        return false;
+    }
+
+    return true;
+
+}
+
+</script>
+
+</body>
+</html> 
