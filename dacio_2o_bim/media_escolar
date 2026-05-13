@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Boletim</title>
+</head>
+
+<body>
+
+    <h1>Boletim</h1>
+
+    Nome:
+    <input type="text" id="nome">
+    <br><br>
+
+    Nota 1:
+    <input type="number" id="n1">
+    <br><br>
+
+    Nota 2:
+    <input type="number" id="n2">
+    <br><br>
+
+    Nota 3:
+    <input type="number" id="n3">
+    <br><br>
+
+    <button id="botao">Calcular</button>
+
+    <h2 id="resultado"></h2>
+
+    <script>
+
+        let botao = document.getElementById("botao")
+
+        botao.addEventListener("click", function() {
+
+            let nome = document.getElementById("nome").value
+
+            let n1 = Number(document.getElementById("n1").value)
+            let n2 = Number(document.getElementById("n2").value)
+            let n3 = Number(document.getElementById("n3").value)
+
+            let media = (n1 + n2 + n3) / 3
+
+            let resultado = document.getElementById("resultado")
+
+            if(media >= 7) {
+
+                resultado.innerHTML = nome + " foi aprovado com média " + media.toFixed(2)
+
+                resultado.style.color = "blue"
+
+            }
+
+            else if(media >= 4) {
+
+                let falta = 10 - media
+
+                resultado.innerHTML = nome + " ficou de exame. Faltam " + falta.toFixed(2) + " pontos pra 10"
+
+                resultado.style.color = "green"
+
+            }
+
+            else {
+
+                resultado.innerHTML = nome + " foi reprovado com média " + media.toFixed(2)
+
+                resultado.style.color = "red"
+
+            }
+
+        })
+
+    </script>
+
+</body>
+</html>
