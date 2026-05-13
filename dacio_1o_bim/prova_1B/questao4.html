@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <title>Meu Jogador</title>
+    <link rel="stylesheet" href="style.css">
+
+    <style>
+        body {
+    margin: 0;
+    font-family: Arial, sans-serif;
+    background: linear-gradient(135deg, #1e3c72, #2a5298);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+}
+.container {
+    text-align: center;
+}
+
+.card {
+    background: white;
+    padding: 20px;
+    border-radius: 12px;
+    width: 300px;
+    box-shadow: 0 10px 25px rgba(0,0,0,0.3);
+}
+.card img {
+    width: 100%;
+    border-radius: 10px;
+}
+
+button {
+    margin-top: 15px;
+    padding: 10px 20px;
+    border: none;
+    background: #ff9800;
+    color: white;
+    font-weight: bold;
+    border-radius: 8px;
+    cursor: pointer;
+}
+
+button:hover {
+    background: #e68900;
+}
+
+.placeholder {
+    background: #ddd;
+    color: transparent;
+    border-radius: 5px;
+}
+
+.card-text {
+    color: black;
+}
+    </style>
+</head>
+<body>
+
+<div class="container">
+
+    <div class="card">
+
+      <img id="imagemJogador" src="_vinicius_junior.png"Jogador">
+
+        <h2 id="nome" class="placeholder">?????</h2>
+
+        <p id="nascimento" class="placeholder">?????</p>
+        <p id="altura" class="placeholder">?????</p>
+        <p id="posicao" class="placeholder">?????</p>
+        <p id="rank" class="placeholder">?????</p>
+
+    </div>
+
+    <button onclick="revelar()">Revelar</button>
+
+</div>
+
+<script src="script.js"></script>
+</body>
+</html>
