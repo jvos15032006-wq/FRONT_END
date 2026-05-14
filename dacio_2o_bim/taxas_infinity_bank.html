@@ -3,9 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <title>Infinity Bank</title>
-
     <style>
-
         body{
             font-family: Arial;
             margin: 40px;
@@ -19,86 +17,74 @@
 
         button{
             padding: 8px;
+            background-color: green;
+            color: white;
+            border: none;
             cursor: pointer;
         }
 
         #resultado{
             margin-top: 20px;
         }
-
     </style>
-
 </head>
 <body>
 
     <h2>Simulador Infinity Bank</h2>
 
-    <p>Bandeira do cartão:</p>
-
+    <p>Bandeira do cartao:</p>
     <select id="bandeira">
         <option value="visa">Visa</option>
         <option value="master">Mastercard</option>
         <option value="elo">Elo</option>
     </select>
-
     <br>
 
     <p>Valor da venda:</p>
     <input type="number" id="valor">
-
     <br>
 
-    <p>Parcelas:</p>
+    <p>Numero de parcelas:</p>
     <input type="number" id="parcelas">
-
     <br><br>
 
-    <button id="calcular">Calcular</button>
+    <button onclick="calcular()">Calcular</button>
 
     <div id="resultado"></div>
 
     <script>
+        function calcular(){
 
-        let botao = document.getElementById("calcular")
+            var bandeira = document.getElementById("bandeira").value
+            var valor = Number(document.getElementById("valor").value)
+            var parcelas = Number(document.getElementById("parcelas").value)
 
-        botao.addEventListener("click", function(){
-
-            let bandeira = document.getElementById("bandeira").value
-            let valor = Number(document.getElementById("valor").value)
-            let parcelas = Number(document.getElementById("parcelas").value)
-
-            let taxa = 0
+            var taxa = 0
 
             if(bandeira == "visa"){
                 taxa = 0.02
             }
             else if(bandeira == "master"){
-                taxa = 0.0185
+                taxa = 0.02
             }
             else{
                 taxa = 0.03
             }
 
-            let taxaBandeira = valor * taxa
-
-            let juros = valor * (0.0035 * parcelas)
-
-            let taxaMes = parcelas * 12.50
-
-            let total = valor + taxaBandeira + juros + taxaMes
-
-            let parcela = total / parcelas
+            var taxaBandeira = valor * taxa
+            var juros = valor * 0.0035 * parcelas
+            var taxaMes = parcelas * 12.50
+            var total = valor + taxaBandeira + juros + taxaMes
+            var parcela = total / parcelas
 
             document.getElementById("resultado").innerHTML =
-            "Bandeira: " + bandeira +
-            "<br>Taxa da bandeira: R$ " + taxaBandeira.toFixed(2) +
-            "<br>Juros: R$ " + juros.toFixed(2) +
-            "<br>Taxa mensal: R$ " + taxaMes.toFixed(2) +
-            "<br>Total: R$ " + total.toFixed(2) +
-            "<br><br>Valor da parcela: R$ " + parcela.toFixed(2)
-
-        })
-
+                "Bandeira: " + bandeira + "<br>" +
+                "Taxa bandeira: R$ " + taxaBandeira.toFixed(2) + "<br>" +
+                "Juros: R$ " + juros.toFixed(2) + "<br>" +
+                "Taxa mensal: R$ " + taxaMes.toFixed(2) + "<br>" +
+                "Total: R$ " + total.toFixed(2) + "<br><br>" +
+                "Valor da parcela: R$ " + parcela.toFixed(2)
+        }
     </script>
 
 </body>
