@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <title>Calculadora de Eventos</title>
+    <style>
+        body {
+            font-family: sans-serif;
+            margin: 30px;
+            background-color: white;
+        }
+        .campo {
+            margin-bottom: 20px;
+        }
+        select, input {
+            padding: 8px;
+            width: 280px;
+        }
+        button {
+            padding: 12px 25px;
+            background-color:black;
+            color: white;
+            border: none;
+            cursor: pointer;
+            font-weight: bold;
+        }
+        #res {
+            margin-top: 20px;
+            padding: 15px;
+            background: white;
+            border-radius: 5px;
+        }
+    </style>
+</head>
+<body>
+
+    <h2>Orçamento do Evento</h2>
+
+    <div class="campo">
+        <label>Escolha o plano:</label><br>
+        <select id="escolha_plano">
+            <option value="50">Standard (R$ 50)</option>
+            <option value="80">Premium (R$ 80)</option>
+            <option value="120">Infinity Deluxe (R$ 120)</option>
+        </select>
+    </div>
+
+    <div class="campo">
+        <label>Quantas pessoas?</label><br>
+        <input type="number" id="qtd_pessoas" placeholder="0">
+    </div>
+
+    <button onclick="fazerCalculo()">Calcular Agora</button>
+
+    <div id="res"></div>
+
+    <script>
+        function fazerCalculo() {
+            // Pegando os dados do formulário
+            let preco_pessoa = parseFloat(document.getElementById("escolha_plano").value);
+            let total_gente = parseInt(document.getElementById("qtd_pessoas").value);
+
+            // Validando se preencheu a quantidade
+            if (!total_gente || total_gente <= 0) {
+                alert("Precisa colocar a quantidade de pessoas!");
+                return;
+            }
+
+            let custo_inicial = preco_pessoa * total_gente;
+            let servico = custo_inicial * 0.10;
+            let total_parcial = custo_inicial + servico;
+            
+            let desconto = 0;
+            if (total_gente > 100) {
+                desconto = total_parcial * 0.05;
+            }
+
+            let total_final = total_parcial - desconto;
+
+            // Mostrando na tela
+            let div_resultado = document.getElementById("res");
+            div_resultado.style.display = "block";
+            
+            div_resultado.innerHTML = `
+                <b>Resumo do Pedido:</b><br><br>
+                Valor base: R$ ${custo_inicial.toFixed(2)}<br>
+                Taxa de serviço: R$ ${servico.toFixed(2)}<br>
+                Desconto aplicado: R$ ${desconto.toFixed(2)}<br>
+                <hr>
+                <strong>Total a pagar: R$ ${total_final.toFixed(2)}</strong>
+            `;
+        }
+    </script>
+</body>
+</html>
