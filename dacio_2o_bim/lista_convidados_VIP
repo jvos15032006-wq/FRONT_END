@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <title>Lista VIP - Simples</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            padding: 20px;
+            background: white;
+            color: black;
+        }
+
+        .box {
+            width: 400px;
+            border: 1px solid black;
+            padding: 15px;
+        }
+
+        h2 {
+            margin-top: 0;
+            text-transform: uppercase;
+            font-size: 18px;
+        }
+
+        input {
+            padding: 8px;
+            border: 1px solid black;
+            width: 250px;
+        }
+
+        button {
+            padding: 8px;
+            background: white;
+            border: 1px solid black;
+            cursor: pointer;
+        }
+
+        button:hover {
+            background: white;
+        }
+
+        ul {
+            padding-left: 20px;
+            margin-top: 20px;
+        }
+
+        li {
+            margin-bottom: 10px;
+            border-bottom: 1px dotted white;
+            padding-bottom: 5px;
+        }
+
+        .riscado {
+            text-decoration: line-through;
+            color: grey;
+        }
+
+        .btns {
+            margin-left: 10px;
+        }
+
+        .btns button {
+            padding: 2px 5px;
+            font-size: 10px;
+        }
+    </style>
+</head>
+<body>
+
+<div class="box">
+    <h2>Infinity Bank - Convidados</h2>
+    
+    <input type="text" id="nomeInput" placeholder="Escreva o nome">
+    <button id="addBtn">ADD</button>
+
+    <ul id="lista"></ul>
+</div>
+
+<script>
+    var lista = document.getElementById("lista");
+    var input = document.getElementById("nomeInput");
+    var btn = document.getElementById("addBtn");
+    
+    var convidados = [];
+    btn.onclick = function() {
+        var valor = input.value;
+        
+        if (valor.trim() === "") {
+            alert("Escreva algo!");
+            return;
+        }
+
+        convidados.push({
+            nome: valor,
+            chegou: false
+        });
+
+        input.value = ""; 
+        desenharLista();
+    };
+
+    function desenharLista() {
+        lista.innerHTML = ""; 
+        for (var i = 0; i < convidados.length; i++) {
+            var li = document.createElement("li");
+            var item = convidados[i];
+
+            var span = document.createElement("span");
+            span.innerHTML = item.nome;
+            if (item.chegou) {
+                span.className = "riscado";
+            }
+
+            var b1 = "<button onclick='check(" + i + ")'>OK</button>";
+            var b2 = "<button onclick='edit(" + i + ")'>EDT</button>";
+            var b3 = "<button onclick='del(" + i + ")'>DEL</button>";
+
+            li.appendChild(span);
+            var div = document.createElement("div");
+            div.className = "btns";
+            div.innerHTML = b1 + b2 + b3;
+            li.appendChild(div);
+
+            lista.appendChild(li);
+        }
+    }
+
+    window.check = function(pos) {
+        convidados[pos].chegou = !convidados[pos].chegou;
+        desenharLista();
+    };
+
+    window.del = function(pos) {
+        convidados.splice(pos, 1);
+        desenharLista();
+    };
+
+    window.edit = function(pos) {
+        var novo = prompt("Novo nome:", convidados[pos].nome);
+        if (novo) {
+            convidados[pos].nome = novo;
+            desenharLista();
+        }
+    };
+
+</script>
+
+</body>
+</html>
