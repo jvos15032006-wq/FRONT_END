@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+  <meta charset="UTF-8">
+  <title>Jogo da Velha</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background: #f5f5f5;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      min-height: 100vh;
+    }
+
+    .container {
+      text-align: center;
+    }
+
+    h1 {
+      font-size: 28px;
+      margin-bottom: 16px;
+      color: #222;
+    }
+
+    #status {
+      font-size: 18px;
+      color: #444;
+      margin-bottom: 20px;
+    }
+
+    .board {
+      display: grid;
+      grid-template-columns: repeat(3, 100px);
+      grid-template-rows: repeat(3, 100px);
+      gap: 6px;
+      margin: 0 auto 24px;
+      width: fit-content;
+    }
+
+    .cell {
+      width: 100px;
+      height: 100px;
+      background: #fff;
+      border: 1px solid #ccc;
+      font-size: 44px;
+      font-weight: bold;
+      cursor: pointer;
+      color: #222;
+    }
+
+    .cell:hover:not(.tomada) {
+      background: #eee;
+    }
+
+    .cell.tomada { cursor: default; }
+    .cell.x { color: #2563eb; }
+    .cell.o { color: #dc2626; }
+    .cell.vencedora { background: #f0f0f0; border-color: #888; }
+
+    #reiniciar {
+      background: #222;
+      color: #fff;
+      border: none;
+      padding: 10px 32px;
+      font-size: 15px;
+      cursor: pointer;
+    }
+
+    #reiniciar:hover { background: #444; }
+  </style>
+</head>
+<body>
+
+<div class="container">
+  <h1>Jogo da Velha</h1>
+  <div id="status">Vez de X</div>
+  <div class="board">
+    <button class="cell" onclick="jogar(0)"></button>
+    <button class="cell" onclick="jogar(1)"></button>
+    <button class="cell" onclick="jogar(2)"></button>
+    <button class="cell" onclick="jogar(3)"></button>
+    <button class="cell" onclick="jogar(4)"></button>
+    <button class="cell" onclick="jogar(5)"></button>
+    <button class="cell" onclick="jogar(6)"></button>
+    <button class="cell" onclick="jogar(7)"></button>
+    <button class="cell" onclick="jogar(8)"></button>
+  </div>
+  <button id="reiniciar" onclick="reiniciar()">Reiniciar</button>
+</div>
+
+<script>
+  var tabuleiro = Array(9).fill(null);
+  var atual = 'X';
+  var fim = false;
+
+  var combinacoes = [
+    [0,1,2],[3,4,5],[6,7,8],
+    [0,3,6],[1,4,7],[2,5,8],
+    [0,4,8],[2,4,6]
+  ];
+
+  function jogar(i) {
+    if (fim || tabuleiro[i]) return;
+    tabuleiro[i] = atual;
+    var celulas = document.querySelectorAll('.cell');
+    celulas[i].textContent = atual;
+    celulas[i].classList.add('tomada', atual.toLowerCase());
+
+    var combo = verificarVencedor();
+    if (combo) {
+      combo.forEach(function(idx) { celulas[idx].classList.add('vencedora'); });
+      document.getElementById('status').textContent = atual + ' venceu!';
+      fim = true;
+      return;
+    }
+
+    if (tabuleiro.every(function(v) { return v; })) {
+      document.getElementById('status').textContent = 'Empatou!';
+      fim = true;
+      return;
+    }
+
+    atual = atual === 'X' ? 'O' : 'X';
+    document.getElementById('status').textContent = 'Vez de ' + atual;
+  }
+
+  function verificarVencedor() {
+    for (var i = 0; i < combinacoes.length; i++) {
+      var a = combinacoes[i][0], b = combinacoes[i][1], c = combinacoes[i][2];
+      if (tabuleiro[a] && tabuleiro[a] === tabuleiro[b] && tabuleiro[a] === tabuleiro[c]) {
+        return combinacoes[i];
+      }
+    }
+    return null;
+  }
+
+  function reiniciar() {
+    tabuleiro = Array(9).fill(null);
+    atual = 'X';
+    fim = false;
+    document.getElementById('status').textContent = 'Vez de X';
+    document.querySelectorAll('.cell').forEach(function(cel) {
+      cel.textContent = '';
+      cel.className = 'cell';
+    });
+  }
+</script>
+
+</body>
+</html>
